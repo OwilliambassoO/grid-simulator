@@ -1,11 +1,17 @@
-const axios = require("axios");
-const { env } = require("./environment.js");
+const express = require("express");
+const app = express();
 
-axios
-  .get(`${env.host}/getSlot`)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(`Error: ${error}`);
+app.use(express.json());
+
+app.post("/calculateSlot", (req, res) => {
+  const { slot } = req.body;
+  res.send(slot);
+});
+
+const createServer = (port) => {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
   });
+};
+
+createServer(9002);
