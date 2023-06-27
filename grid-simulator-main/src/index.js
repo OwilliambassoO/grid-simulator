@@ -125,7 +125,13 @@ app.get("/execute", (req, res) => {
         }
       }
 
-      res.send(resultsArray);
+      let sum = 0;
+
+      for (const resultArray of resultsArray) {
+        sum = sum + resultArray.data;
+      }
+
+      res.send(resultsArray, sum);
     }
   );
 });
