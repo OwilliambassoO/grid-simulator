@@ -17,5 +17,5 @@ npm install
 ```
 
 ```bash
-npm start
+npm run dev
 ```
