@@ -37,7 +37,7 @@ const calculateSlot = async () => {
                 (result = {
                   slot: slot.name,
                   usedHelper: helper.port,
-                  data: response.data,
+                  data: response.data === false ? 0 : response.data,
                 })
             )
             .catch(
@@ -69,9 +69,9 @@ app.get("/execute", (req, res) => {
   async.parallel(
     {
       calculateSlot1: calculateSlot,
-      calculateSlot2: calculateSlot,
-      calculateSlot3: calculateSlot,
-      calculateSlot4: calculateSlot,
+      // calculateSlot2: calculateSlot,
+      // calculateSlot3: calculateSlot,
+      // calculateSlot4: calculateSlot,
     },
     async (err, results) => {
       if (err) {
@@ -79,12 +79,17 @@ app.get("/execute", (req, res) => {
         return res.status(500).send("Erro ao executar a chamada paralela");
       }
 
-      const resultsArray = [results.calculateSlot1, results.calculateSlot2];
-      console.log(results);
+      const resultsArray = [
+        results.calculateSlot1,
+        // results.calculateSlot2,
+        // results.calculateSlot3,
+        // results.calculateSlot4,
+      ];
+
       let resultIdx = 0;
 
       for (const result of resultsArray) {
-        if (!result.data) {
+        if (result === undefined) {
           const invalidHelper = helpers.find(
             (helper) => helper.port === result.usedHelper
           );
@@ -131,7 +136,7 @@ app.get("/execute", (req, res) => {
         sum = sum + resultArray.data;
       }
 
-      res.send(resultsArray, sum);
+      res.send({ array: resultsArray, sum: sum });
     }
   );
 });

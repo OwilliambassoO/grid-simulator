@@ -101,7 +101,7 @@ app.post("/calculateSlot", (req, res) => {
   let i;
 
   const backupArray = JSON.parse(JSON.stringify(convertedArray));
-  const matchArray = JSON.parse(JSON.stringify(convertedArray));
+  let matchArray = JSON.parse(JSON.stringify(convertedArray));
 
   let isValid = checkSegments(
     segments.firstSegment,
@@ -111,13 +111,14 @@ app.post("/calculateSlot", (req, res) => {
 
   printArray(convertedArray);
 
+  let soma = 0;
+
   if (!isValid) {
     for (let i = 0; i < 10; i++) {
       convertedArray = JSON.parse(JSON.stringify(backupArray));
 
       if (isValid) {
-        const matchArray = JSON.parse(JSON.stringify(convertedArray));
-        res.send(matchArray);
+        matchArray = JSON.parse(JSON.stringify(convertedArray));
         break;
       }
 
@@ -131,8 +132,7 @@ app.post("/calculateSlot", (req, res) => {
         );
 
         if (isValid) {
-          const matchArray = JSON.parse(JSON.stringify(convertedArray));
-          res.send(matchArray);
+          matchArray = JSON.parse(JSON.stringify(convertedArray));
           break;
         }
 
@@ -148,8 +148,7 @@ app.post("/calculateSlot", (req, res) => {
           );
 
           if (isValid) {
-            const matchArray = JSON.parse(JSON.stringify(convertedArray));
-            res.send(matchArray);
+            matchArray = JSON.parse(JSON.stringify(convertedArray));
             break;
           }
 
@@ -164,8 +163,7 @@ app.post("/calculateSlot", (req, res) => {
               segments.thirdSegment
             );
             if (isValid) {
-              const matchArray = JSON.parse(JSON.stringify(convertedArray));
-              res.send(matchArray);
+              matchArray = JSON.parse(JSON.stringify(convertedArray));
               break;
             }
 
@@ -180,8 +178,7 @@ app.post("/calculateSlot", (req, res) => {
                 segments.thirdSegment
               );
               if (isValid) {
-                const matchArray = JSON.parse(JSON.stringify(convertedArray));
-                res.send(matchArray);
+                matchArray = JSON.parse(JSON.stringify(convertedArray));
                 break;
               }
 
@@ -196,8 +193,7 @@ app.post("/calculateSlot", (req, res) => {
                   segments.thirdSegment
                 );
                 if (isValid) {
-                  const matchArray = JSON.parse(JSON.stringify(convertedArray));
-                  res.send(matchArray);
+                  matchArray = JSON.parse(JSON.stringify(convertedArray));
                   break;
                 }
 
@@ -212,10 +208,7 @@ app.post("/calculateSlot", (req, res) => {
                     segments.thirdSegment
                   );
                   if (isValid) {
-                    const matchArray = JSON.parse(
-                      JSON.stringify(convertedArray)
-                    );
-                    res.send(matchArray);
+                    matchArray = JSON.parse(JSON.stringify(convertedArray));
                     break;
                   }
 
@@ -232,10 +225,7 @@ app.post("/calculateSlot", (req, res) => {
                       segments.thirdSegment
                     );
                     if (isValid) {
-                      const matchArray = JSON.parse(
-                        JSON.stringify(convertedArray)
-                      );
-                      res.send(matchArray);
+                      matchArray = JSON.parse(JSON.stringify(convertedArray));
                       break;
                     }
 
@@ -252,10 +242,7 @@ app.post("/calculateSlot", (req, res) => {
                         segments.thirdSegment
                       );
                       if (isValid) {
-                        const matchArray = JSON.parse(
-                          JSON.stringify(convertedArray)
-                        );
-                        res.send(matchArray);
+                        matchArray = JSON.parse(JSON.stringify(convertedArray));
                         break;
                       }
 
@@ -272,10 +259,9 @@ app.post("/calculateSlot", (req, res) => {
                           segments.thirdSegment
                         );
                         if (isValid) {
-                          const matchArray = JSON.parse(
+                          matchArray = JSON.parse(
                             JSON.stringify(convertedArray)
                           );
-                          res.send(matchArray);
                           break;
                         }
                         convertedArray = JSON.parse(
@@ -307,13 +293,15 @@ app.post("/calculateSlot", (req, res) => {
       segments.thirdSegment
     );
     printArray(convertedArray);
+  } else {
+    res.send(soma);
   }
-
-  let soma = 0;
 
   for (let i = 18; i < 27; i++) {
     soma = soma + matchArray[i];
   }
+
+  res.send(soma);
 });
 
 const createServer = (port) => {
